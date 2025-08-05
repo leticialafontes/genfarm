@@ -1,10 +1,8 @@
 import { type ChangeEvent, useEffect, useState } from "react";
-
 import { useNavigate, useParams } from "react-router-dom";
-
-
 import { atualizar, buscar, cadastrar } from "../../../services/Service";
 import type Categoria from "../../../models/Categoria";
+import { RotatingLines } from "react-loader-spinner";
 
 function FormCategoria() {
 
@@ -20,11 +18,8 @@ function FormCategoria() {
 
     async function buscarPorId(id: string) {
         try {
-            await buscar(`/temas/${id}`, setCategoria, {
-                // headers: { Authorization: token }
-            })
+            await buscar(`/categorias/${id}`, setCategoria)
         } catch (error: any) {
-            if (error.toString().includes('401'))
         }
     }
 
@@ -51,19 +46,19 @@ function FormCategoria() {
 
         if (id !== undefined) {
             try {
-                await atualizar(`/categoria`, categoria, setCategoria, 
+                await atualizar(`/categorias`, categoria, setCategoria, 
             )
-                alert('O Tema foi atualizado com sucesso!')
+                alert('A categoria foi atualizada com sucesso!')
             } catch (error: any) {
-                alert('Erro ao atualizar o tema.')
+                alert('Erro ao atualizar a categoria.')
             }
         } else {
             try {
-                await cadastrar(`/temas`, categoria, setCategoria,
+                await cadastrar(`/categorias`, categoria, setCategoria,
             )
-                alert('O Tema foi cadastrado com sucesso!')
+                alert('A categoria foi cadastrada com sucesso!')
             } catch (error: any) {
-                  alert('Erro ao cadastrar o tema.')
+                  alert('Erro ao cadastrar a categoria.')
             }
         }
 
@@ -79,6 +74,15 @@ function FormCategoria() {
 
             <form className="w-1/2 flex flex-col gap-4" onSubmit={gerarNovaCategoria}>
                 <div className="flex flex-col gap-2">
+                     <label htmlFor="descricao">Nome da Categoria</label>
+                     <input
+                        type="text"
+                        placeholder="Digite o nome da sua categoria"
+                        name='nome'
+                        className="border-2 border-slate-700 rounded p-2"
+                        value={categoria.nome}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+                    />
                     <label htmlFor="descricao">Descrição da Categoria</label>
                     <input
                         type="text"

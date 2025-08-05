@@ -5,6 +5,7 @@ import type Categoria from "../../../models/Categoria";
 import CardCategorias from "../cardcategorias/CardCategorias";
 
 
+
 function ListaCategorias() {
 
     // const navigate = useNavigate();
@@ -13,44 +14,21 @@ function ListaCategorias() {
 
     // const { handleLogout } = useContext(AuthContext)
 
-    async function buscarTemas() {
+    async function buscarCategoria() {
         try {
-            await buscar('/temas', setCategorias, {
-            })
+            await buscar('/categorias', setCategorias)
         } catch (error: any) {
-            if (error.toString().includes('401')) {
-                // handleLogout()
             }
         }
-    }
-
-    // aqui seria para navegar pro home e fazer o login ou cadastrar
-    // useEffect(() => {
-    //     if (token === '') {
-    //         alert('Você precisa estar logado!')
-    //         navigate('/')
-    //     }
-    // }, [token])
 
 
     useEffect(() => {
-        buscarTemas()    
+        buscarCategoria()    
     }, [categorias.length])
     
     return (
         <>
-        {categorias.length === 0 
-        // && ( aqui é para rodar o negocinho de dna enquanto espera carregar os dados necesarios
-        //     <Dna
-        //     visible={true}
-        //     height="200"
-        //     width="200"
-        //     ariaLabel="dna-loading"
-        //     wrapperStyle={{}}
-        //     wrapperClass="dna-wrapper mx-auto"
-        // />
-        // )
-        }
+        {categorias.length === 0}
             <div className="flex justify-center w-full my-4">
                 <div className="container flex flex-col">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
